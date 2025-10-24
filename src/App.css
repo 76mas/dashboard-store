@@ -1,0 +1,17 @@
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* للـ IE و Edge */
+  scrollbar-width: none; /* للفايرفوكس */
+}
+#category option {
+  background-color: black; /* خلفية سودة */
+  color: white; /* خط أبيض */
+}
+
+#category option:hover {
+  background-color: white; /* خلفية بيضة عند الهوفر */
+  color: black; /* خط أسود عند الهوفر */
+}
