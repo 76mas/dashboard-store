@@ -28,7 +28,7 @@ const DeleteItem = ({
     console.log("data send", DataSend);
 
     try {
-      const response = await axios.put(`http://localhost:4000/order/${id}`, {
+      const response = await axios.put(`http://161.97.169.6:4000/order/${id}`, {
         items: DataSend,
       });
 
@@ -69,9 +69,7 @@ const DeleteItem = ({
             >
               <IoAlertCircleOutline className="text-[30px] text-[#ff0073cc]" />
 
-              <h1 className="text-[#ddd]">
-                هل أنت متأكد من حذف هذا العنصر؟
-              </h1>
+              <h1 className="text-[#ddd]">هل أنت متأكد من حذف هذا العنصر؟</h1>
               <div className="flex items-center gap-3">
                 <button
                   onClick={updateOrderDetails}

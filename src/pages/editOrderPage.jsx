@@ -87,14 +87,14 @@ const EditOrderPage = () => {
   const GetOrders = async ({ id }) => {
     setLoading(true);
     try {
-      const res = await axios.get(`https://161.97.169.6:4000/order/${id}`);
+      const res = await axios.get(`http://161.97.169.6:4000/order/${id}`);
       setOrders(res.data);
 
       try {
         let p = [];
         for (let i = 0; i < res.data.items.length; i++) {
           const product = await axios.get(
-            `https://161.97.169.6:4000/product/${res.data.items[i].id}`
+            `http://161.97.169.6:4000/product/${res.data.items[i].id}`
           );
           p.push(product.data);
         }
@@ -105,7 +105,7 @@ const EditOrderPage = () => {
 
       try {
         const userRes = await axios.get(
-          `https://161.97.169.6:4000/user/${res.data.user_id}`
+          `http://161.97.169.6:4000/user/${res.data.user_id}`
         );
         setUserInfo(userRes.data);
       } catch (err) {

@@ -43,7 +43,7 @@ const AddCategory = ({ setShowAddCategory, refresh, setRefresh }) => {
     }
     try {
       const resoponse = await axios.post(
-        "http://localhost:4000/category",
+        "http://161.97.169.6:4000/category",
         DataSend
       );
       console.log("add category success", resoponse.data);

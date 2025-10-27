@@ -26,7 +26,7 @@ const AddProductToOrder = ({
   const fetchProducts = async (term = "") => {
     try {
       setLoading(true);
-      const response = await axios.get("https://161.97.169.6:4000/product", {
+      const response = await axios.get("http://161.97.169.6:4000/product", {
         params: { limit: 10, search: term },
       });
       if (response.data?.success) {
@@ -70,7 +70,7 @@ const AddProductToOrder = ({
     }
 
     try {
-      const response = await axios.get(`https://161.97.169.6:4000/order/${id}`);
+      const response = await axios.get(`http://161.97.169.6:4000/order/${id}`);
       const currentOrder = response.data;
 
       if (!currentOrder) {
@@ -87,7 +87,7 @@ const AddProductToOrder = ({
 
       const updatedItems = [...(currentOrder.items || []), newItem];
 
-      await axios.put(`https://161.97.169.6:4000/order/${id}`, {
+      await axios.put(`http://161.97.169.6:4000/order/${id}`, {
         items: updatedItems,
       });
 

@@ -42,7 +42,7 @@ const EditCategory = ({ setShowEditCategory, id, refresh, setRefresh }) => {
     }
     try {
       const resoponse = await axios.put(
-        `http://localhost:4000/category/${id}`,
+        `http://161.97.169.6:4000/category/${id}`,
         data
       );
       console.log("add category success", resoponse.data);
@@ -55,7 +55,7 @@ const EditCategory = ({ setShowEditCategory, id, refresh, setRefresh }) => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/category/${id}`);
+      const res = await axios.get(`http://161.97.169.6:4000/category/${id}`);
       console.log("category", res.data);
       setCategory(res.data);
       setImage(res.data.image);

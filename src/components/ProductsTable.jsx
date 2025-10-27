@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import AlertDelete from "./alertDelete";
 import EditProduct from "./editProduct";
 
-
 function formatWithCommas(value) {
   if (value === null || value === undefined) return "";
   const s = String(value).trim();
@@ -79,7 +78,9 @@ const ProductsTable = ({
       title: "السعر",
       dataIndex: "price",
       key: "price",
-      render: (price) => <span className="text-green-500">${formatWithCommas(price)}</span>, // <span className="text-green-500">${price}</span>,
+      render: (price) => (
+        <span className="text-green-500">${formatWithCommas(price)}</span>
+      ), // <span className="text-green-500">${price}</span>,
     },
     {
       title: "المخزون",
@@ -113,15 +114,12 @@ const ProductsTable = ({
           }}
         >
           <Tag
-          
-  style={
-              {
-                width:"90px",
-                textAlign:"center"
-              }
-            }
-
-          color={active ? "green" : "red"}>
+            style={{
+              width: "90px",
+              textAlign: "center",
+            }}
+            color={active ? "green" : "red"}
+          >
             {active ? "فعال" : "غير فعال"}
           </Tag>
         </Space>

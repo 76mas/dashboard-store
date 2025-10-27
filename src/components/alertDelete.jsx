@@ -15,7 +15,7 @@ const AlertDelete = ({
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:4000/${deleteitems.name}/${deleteitems.id}`
+        `http://161.97.169.6:4000/${deleteitems.name}/${deleteitems.id}`
       );
       setShowAlert(false);
       setDeleteitems({ id: null, name: null });

@@ -20,7 +20,7 @@ const EdtUserOrderInfo = ({ setRefresh, refresh }) => {
 
   const getOrderbyId = async () => {
     try {
-      const order = await axios.get(`http://localhost:4000/order/${id}`);
+      const order = await axios.get(`http://161.97.169.6:4000/order/${id}`);
 
       //   setOrder(order.data);
       setOrderEdit({
@@ -29,6 +29,7 @@ const EdtUserOrderInfo = ({ setRefresh, refresh }) => {
         status: order.data.status,
       });
       // setOrderDetails(order.data);
+      // console.log("sss",order.data);
     } catch (err) {
       console.log(err);
     }
@@ -36,7 +37,7 @@ const EdtUserOrderInfo = ({ setRefresh, refresh }) => {
 
   const handleEditOrder = async () => {
     try {
-      await axios.put(`http://localhost:4000/order/${id}`, orderEdit);
+      await axios.put(`http://161.97.169.6:4000/order/${id}`, orderEdit);
 
       setShowEditOrderUserInfo(false);
       setRefresh(!refresh);

@@ -9,6 +9,8 @@ import {
   Tag,
   Switch,
   Upload,
+  Form,
+  DatePicker,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import {
@@ -48,7 +50,7 @@ const BannerTable = () => {
 
   const GetBanners = async () => {
     try {
-      const res = await axios.get("https://161.97.169.6:4000/banner");
+      const res = await axios.get("http://161.97.169.6:4000/banner");
       setBanners(res.data);
     } catch (err) {
       console.log(err);
@@ -143,7 +145,7 @@ const BannerTable = () => {
 
   const handelChangeActive = async (id, newActive) => {
     try {
-      await axios.put(`https://161.97.169.6:4000/banner/${id}`, {
+      await axios.put(`http://161.97.169.6:4000/banner/${id}`, {
         active: newActive,
       });
       // getAllProducts();
@@ -253,6 +255,7 @@ const AddBanner = ({
   const [image, setImage] = useState(null);
   const [showclose, setShowclose] = useState(false);
   const [categorys, setCategorys] = useState([]);
+  const [endDate, setEndDate] = useState();
   const [products, setProducts] = useState([]);
   const [selectedProductIds, setSelectedProductIds] = useState([]); // ✅ منتجات مختارة فقط أرقام
   const [productSelected, setProductSelected] = useState([]);
@@ -273,7 +276,7 @@ const AddBanner = ({
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("https://161.97.169.6:4000/category");
+      const res = await axios.get("http://161.97.169.6:4000/category");
       setCategorys(res.data);
     } catch (err) {
       console.log(err);
@@ -283,7 +286,7 @@ const AddBanner = ({
   const fetchProducts = async (term = "") => {
     try {
       setLoading(true);
-      const response = await axios.get("https://161.97.169.6:4000/product", {
+      const response = await axios.get("http://161.97.169.6:4000/product", {
         params: { limit: 10, search: term },
       });
       if (response.data?.success) {
@@ -299,12 +302,17 @@ const AddBanner = ({
   const getBanner = async () => {
     try {
       const res = await axios.get(
-        `https://161.97.169.6:4000/banner/${bannerId}`
+        `http://161.97.169.6:4000/banner/${bannerId}`
       );
       const data = res.data;
       setBanner(data);
       setImage(data.background);
       setProductSelected(data.map);
+      console.log("abnnner data edit", data);
+      if (data.type === "Timer") {
+        setProductSelected(data.map[0].products);
+        setEndDate(data?.map[0]?.end_date);
+      }
       setSingleBannerSelected(data.map);
 
       console.log("abnnner data edit", data);
@@ -352,12 +360,21 @@ const AddBanner = ({
       if (banner.type === "slides") {
         data.map = singleBannerSelected || [];
       }
+
+      if (banner.type === "Timer") {
+        data.map = [
+          {
+            end_date: endDate,
+            products: data.map,
+          },
+        ];
+      }
       // console.log("data", data);
       // return;
       if (bannerId) {
-        await axios.put(`https://161.97.169.6:4000/banner/${bannerId}`, data);
+        await axios.put(`http://161.97.169.6:4000/banner/${bannerId}`, data);
       } else {
-        await axios.post("https://161.97.169.6:4000/banner", data);
+        await axios.post("http://161.97.169.6:4000/banner", data);
       }
 
       setShowAddBanner(false);
@@ -397,6 +414,10 @@ const AddBanner = ({
     setSingleBannerSelected(singleBannerSelected.filter((p) => p.id !== value));
   };
 
+  const handleDateChange = (date) => {
+    setEndDate(date);
+  };
+
   return (
     <div
       onClick={() => {
@@ -418,7 +439,7 @@ const AddBanner = ({
           type="text"
           value={banner.name}
           onChange={(e) => setBanner({ ...banner, name: e.target.value })}
-          className="w-full border border-[#ffffff4e] bg-transparent text-white p-2 rounded-md"
+          className="w-full border border-[#ffffff4e] bg-transparent text-white/50 p-2 rounded-md"
           placeholder="اسم البانر"
         />
 
@@ -497,9 +518,7 @@ const AddBanner = ({
               placeholder="اختر الفئات المرتبطة"
             />
           </ConfigProvider>
-        ) : banner.type === "Timer" ||
-          banner.type === "List" ||
-          banner.type === "single" ? (
+        ) : banner.type === "List" || banner.type === "single" ? (
           <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
             <Select
               mode="multiple"
@@ -517,6 +536,48 @@ const AddBanner = ({
               placeholder="اختر المنتجات"
             />
           </ConfigProvider>
+        ) : banner.type === "Timer" ? (
+          <>
+            <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+              <Select
+                mode="multiple"
+                key="select-product"
+                showSearch
+                filterOption={false}
+                value={productSelected.map((p) => p?.id)}
+                options={products.map((p) => ({
+                  value: p.id,
+                  label: p.name,
+                }))}
+                onSelect={handleSelectProduct}
+                onSearch={fetchProducts}
+                loading={loading}
+                placeholder="اختر المنتجات"
+              />
+
+              <Form.Item>
+                <ConfigProvider
+                  style={{ height: "50px", width: "100%" }}
+                  theme={{ algorithm: theme.darkAlgorithm }}
+                >
+                  <DatePicker
+                    placeholder="اختر تاريخ الانتهاء"
+                    style={{ height: "50px", width: "100%" }}
+                    onChange={handleDateChange}
+                    // value={endDate}
+                    format="YYYY-MM-DD"
+                    // disabledDate={disabledDate}
+                    allowClear
+                    size="large"
+                    className="w-full border border-[#ffffff4e] bg-transparent text-white/50 p-2 rounded-md"
+                    // placeholder="اختر تاريخ الانتهاء"
+
+                    
+                  />
+                </ConfigProvider>
+              </Form.Item>
+            </ConfigProvider>
+          </>
         ) : (
           banner.type === "slides" && (
             <>
@@ -568,7 +629,7 @@ const AddBanner = ({
 const AlertDelete = ({ id, setShowDelete, refresh, setRefresh }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://161.97.169.6:4000/banner/${id}`);
+      await axios.delete(`http://161.97.169.6:4000/banner/${id}`);
       setShowDelete(false);
 
       setRefresh(!refresh);

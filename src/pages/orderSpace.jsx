@@ -13,12 +13,10 @@ import { GrRedo } from "react-icons/gr";
 function formatWithCommas(value) {
   if (value === null || value === undefined) return "";
   const s = String(value).trim();
-  // إذا كان فيه جزء عشري
   const [intPart, decPart] = s.split(".");
-  // احتفظ بعلامة السالب
   const sign = intPart.startsWith("-") ? "-" : "";
   const absInt = intPart.replace("-", "");
-  // نضيف الفواصل كل 3 خانات من اليمين
+
   const formattedInt = absInt.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return sign + formattedInt + (decPart ? "." + decPart : "");
 }
@@ -31,27 +29,29 @@ const OrdersTable = () => {
   const [refresh, setRefresh] = useState(false);
   const [showDeleteItem, setShowDeleteItem] = useState(false);
   const [deleteitems, setDeleteitems] = useState({ id: null, name: null });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // جلب الطلبات
   const getOrders = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get("https://161.97.169.6:4000/order");
+      const res = await axios.get("http://161.97.169.6:4000/order");
       const data = res.data;
 
       setOrders(data);
 
-      // جلب أسماء المستخدمين حسب user_id
       data.forEach(async (order) => {
         if (!users[order.user_id]) {
           try {
             const userRes = await axios.get(
-              `https://161.97.169.6:4000/user/${order.user_id}`
+              `http://161.97.169.6:4000/user/${order.user_id}`
             );
             setUsers((prev) => ({
               ...prev,
               [order.user_id]: userRes.data.name,
             }));
+            setLoading(false);
           } catch (err) {
             console.log(err);
           }
@@ -65,7 +65,7 @@ const OrdersTable = () => {
   // تحديث حالة الطلب
   const updateOrderStatus = async (status, id) => {
     try {
-      await axios.put(`https://161.97.169.6:4000/order/${id}`, { status });
+      await axios.put(`http://161.97.169.6:4000/order/${id}`, { status });
       setRefresh((prev) => !prev);
     } catch (err) {
       console.log(err);
@@ -271,6 +271,7 @@ const OrdersTable = () => {
                 dataSource={filteredOrders}
                 pagination={{ pageSize: 6 }}
                 className="w-full"
+                // loading={loading}
               />
             </ConfigProvider>
           </motion.div>
@@ -302,7 +303,7 @@ const AlertDelete = ({
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `https://161.97.169.6:4000/${deleteitems.name}/${deleteitems.id}`
+        `http://161.97.169.6:4000/${deleteitems.name}/${deleteitems.id}`
       );
       setShowDeleteItem(false);
       setDeleteitems({ id: null, name: null });

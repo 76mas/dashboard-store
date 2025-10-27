@@ -9,8 +9,6 @@ import axios from "axios";
 import AddProduct from "@/components/addProduct";
 import { Delete } from "lucide-react";
 
-
-
 const ProductsSpace = () => {
   // const { setShowProduct, refresh } = useStatment();
   const [search, setSearch] = useState("");
@@ -41,10 +39,9 @@ const ProductsSpace = () => {
     getProducts();
   }, [refresh, page, search]);
 
-
   const getProducts = async () => {
     try {
-      const res = await axios.get("https://161.97.169.6:4000/product", {
+      const res = await axios.get("http://161.97.169.6:4000/product", {
         params: { page, limit, search },
       });
 
@@ -55,7 +52,6 @@ const ProductsSpace = () => {
       console.log("Error fetching products:", err);
     }
   };
-
 
   return (
     <>
@@ -127,7 +123,6 @@ const ProductsSpace = () => {
       <div className="w-full h-full mt-6 flex justify-center items-center">
         <Container>
           <div className="w-full h-full flex justify-center items-center">
-        
             <ProductsTable
               products={products}
               refresh={refresh}
@@ -137,7 +132,6 @@ const ProductsSpace = () => {
               limit={limit}
               setPage={setPage}
             />
-            
           </div>
         </Container>
 

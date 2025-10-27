@@ -52,7 +52,7 @@ const EditOrder = ({
     });
 
     try {
-      await axios.put(`http://localhost:4000/order/${id}`, {
+      await axios.put(`http://161.97.169.6:4000/order/${id}`, {
         items: DataSend,
       });
       setRefresh(!refresh);
