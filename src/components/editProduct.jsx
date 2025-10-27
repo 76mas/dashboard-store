@@ -69,7 +69,7 @@ const EditProduct = ({
     setLoading(true);
     try {
       const resoponse = await axios.put(
-        `http://localhost:4000/product/${productDetails.id}`,
+        `http://161.97.169.6:4000/product/${productDetails.id}`,
         data
       );
 
@@ -89,7 +89,7 @@ const EditProduct = ({
           console.log("Uploaded:", cdnUrl);
 
           // 3️⃣ حفظ الصورة بقاعدة البيانات
-          await axios.post("http://localhost:4000/images", {
+          await axios.post("http://161.97.169.6:4000/images", {
             link: cdnUrl,
             product_id: resoponse.data.id,
             priority: i + 1,
@@ -100,7 +100,9 @@ const EditProduct = ({
       if (ImageRemoved.length > 0) {
         try {
           for (let i = 0; i < ImageRemoved.length; i++) {
-            await axios.delete(`http://localhost:4000/images/${ImageRemoved}`);
+            await axios.delete(
+              `http://161.97.169.6:4000/images/${ImageRemoved}`
+            );
           }
         } catch (err) {
           console.log(err);
@@ -117,7 +119,7 @@ const EditProduct = ({
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/category");
+      const res = await axios.get("http://161.97.169.6:4000/category");
 
       setCategorys(res.data);
     } catch (err) {

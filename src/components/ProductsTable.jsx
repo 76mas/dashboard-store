@@ -40,7 +40,7 @@ const ProductsTable = ({
 
   const handelChangeActive = async (id, newActive) => {
     try {
-      await axios.put(`http://localhost:4000/product/${id}`, {
+      await axios.put(`http://161.97.169.6:4000/product/${id}`, {
         active: newActive,
       });
       // getAllProducts();

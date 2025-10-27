@@ -4,10 +4,10 @@ import { useStatment } from "../context/maping";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import ProductsTable from "@/components/ProductsTable";
-import ProductsCard from "@/components/productsCard";
+// import ProductsCard from "@/components/productsCard";
 import axios from "axios";
 import AddProduct from "@/components/addProduct";
-import { Delete } from "lucide-react";
+// import { Delete } from "lucide-react";
 
 const ProductsSpace = () => {
   // const { setShowProduct, refresh } = useStatment();

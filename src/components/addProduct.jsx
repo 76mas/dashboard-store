@@ -33,57 +33,6 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
     getCategory();
   }, []);
 
-  // const handelAddProduct = async () => {
-  //   const data = {
-  //     ...product,
-
-  //     related: product.category_id,
-  //     options: [
-  //       {
-  //         color: colors,
-  //         size: sizes,
-  //       },
-  //     ],
-  //   };
-  //   if (
-  //     data.name === "" ||
-  //     data.description === "" ||
-  //     data.price === "" ||
-  //     data.category_id === "" ||
-  //     data.stock === ""
-  //   ) {
-  //     alert("Please fill all the fields");
-  //     return;
-  //   }
-
-  //   try {
-  //     const resoponse = await axios.post("http://localhost:4000/product", data);
-
-  //     try {
-  //       for (let i = 0; i < images.length; i++) {
-  //         const formData = new FormData();
-  //         formData.append("image", images[i]);
-  //         formData.append("product_id", resoponse.data.id);
-  //         formData.append("priority", i + 1);
-
-  //         await axios.post("http://localhost:4000/images", formData, {
-  //           headers: { "Content-Type": "multipart/form-data" },
-  //         });
-
-  //         setShowAddProduct(false);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-
-  //     setRefresh(!refresh);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  //  import { uploadDirect } from "@uploadcare/upload-client";
-
   const handelAddProduct = async () => {
     const data = {
       ...product,
@@ -111,7 +60,10 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
 
     try {
       // 1️⃣ إضافة المنتج أولاً
-      const response = await axios.post("http://localhost:4000/product", data);
+      const response = await axios.post(
+        "http://161.97.169.6:4000/product",
+        data
+      );
 
       // 2️⃣ رفع الصور
       for (let i = 0; i < images.length; i++) {
@@ -127,7 +79,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
         console.log("Uploaded:", cdnUrl);
 
         // 3️⃣ حفظ الصورة بقاعدة البيانات
-        await axios.post("http://localhost:4000/images", {
+        await axios.post("http://161.97.169.6:4000/images", {
           link: cdnUrl,
           product_id: response.data.id,
           priority: i + 1,
@@ -143,8 +95,9 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/category");
+      const res = await axios.get("http://161.97.169.6:4000/category");
       setCategorys(res.data);
+      console.log("category", res.data);
       setProduct((prev) => ({ ...prev, category_id: res.data[0]?.id }));
     } catch (err) {
       console.log(err);
@@ -180,10 +133,6 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="w-[900px] min-h-[600px] py-12 no-scrollbar  bg-[#ffffff09] border-1 border-[#ffffff1c] backdrop-blur-2xl shadow-md rounded-2xl flex flex-col items-center justify-center gap-3"
           >
-            {/* <div
-              // onClick={(e) => e.stopPropagation()}
-              className="w-[900px] min-h-[600px] py-12 no-scrollbar  bg-[#ffffff09] border-1 border-[#ffffff1c] backdrop-blur-2xl shadow-md rounded-2xl flex flex-col items-center justify-center gap-3"
-            > */}
             <h1 className="text-2xl text-white">اضافة منتج</h1>
 
             <div className="w-full h-[1px] bg-[#ffffff4e]" />
@@ -412,7 +361,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
                       theme={{ algorithm: theme.darkAlgorithm }}
                     >
                       <DatePicker
-                      placeholder="اختر التاريخ الذي ينتهي فيه السعر النهائي"
+                        placeholder="اختر التاريخ الذي ينتهي فيه السعر النهائي"
                         style={{ height: "50px", width: "100%" }}
                         onChange={(date) =>
                           setProduct({ ...product, endpricedate: date })
