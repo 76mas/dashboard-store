@@ -135,6 +135,10 @@ const EditProduct = ({
   };
 
   console.log("images", images);
+
+   const handleSelectCategory = (id) => {
+    setProduct((prev) => ({ ...prev, category_id: id }));
+  };
   return (
     <>
       <div
@@ -343,7 +347,7 @@ const EditProduct = ({
 
                 <label className=" flex text-[#a4a4a4] flex-col h-[80px]  w-full px-2 gap-2">
                   اختر التصنيف:
-                  <select
+                  {/* <select
                     onChange={(e) => {
                       setProduct({
                         ...product,
@@ -363,7 +367,23 @@ const EditProduct = ({
                         {item.name}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
+
+                    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+                    <Select
+                      key="select-product"
+                      showSearch
+                      filterOption={false}
+                      value={product.category_id}
+                      options={categorys.map((p) => ({                                   
+                        value: p.id,
+                        label: p.name,
+                      }))}
+                      onSelect={handleSelectCategory}
+                      loading={loading}
+                      placeholder="اختر المنتجات"
+                    />
+                  </ConfigProvider>
                 </label>
                 {/* PRICE */}
 

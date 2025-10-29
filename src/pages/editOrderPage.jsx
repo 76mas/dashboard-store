@@ -27,7 +27,6 @@ import {
   Divider,
 } from "antd";
 
-import { useStatment } from "../context/maping";
 import EdtUserOrderInfo from "../components/edtUserOrderInfo";
 import DeleteItem from "../components/deleteitemfromOrder";
 import AddProductToOrder from "@/components/addProductToOrder";
@@ -55,17 +54,8 @@ function formatWithCommas(value) {
 const EditOrderPage = () => {
   const { id } = useParams();
 
-  const {
-    // showEditOrder,
-    // setShowEditOrder,
-    // setOrderId,
-    showEditOrderUserInfo,
-    setShowEditOrderUserInfo,
-    // setOrderDetails,
-    showDeleteItem,
-    setShowDeleteItem,
-  } = useStatment();
-
+  const [showDeleteItem, setShowDeleteItem] = useState(false);
+  const [showEditOrderUserInfo, setShowEditOrderUserInfo] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
   const [showAddProductToOrder, setShowAddProductToOrder] = useState(false);
   const [orderId, setOrderId] = useState(null);

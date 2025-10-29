@@ -235,7 +235,7 @@ const EditBanner = () => {
             <div className="flex text-white w-full flex-col justify-center items-center gap-3">
               <SelectCategory categorys={categorys} mapget={banner.map} />
 
-              <SelectType type={banner?.type} />
+              {/* <SelectType type={banner?.type} /> */}
               <button
                 onClick={() => {
                   handelUpdateBanner();

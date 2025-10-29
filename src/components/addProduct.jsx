@@ -115,6 +115,10 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
     }
   };
 
+  const handleSelectCategory = (id) => {
+    setProduct((prev) => ({ ...prev, category_id: id }));
+  };
+
   return (
     <>
       <div
@@ -301,7 +305,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
 
                 <label className=" flex text-[#a4a4a4] flex-col h-[80px]  w-full px-2 gap-2">
                   تصنيف المنتج:
-                  <select
+                  {/* <select
                     onChange={(e) => {
                       setProduct({ ...product, category_id: e.target.value });
                     }}
@@ -315,7 +319,22 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
                         {item.name}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
+                  <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+                    <Select
+                      key="select-product"
+                      showSearch
+                      filterOption={false}
+                      value={product.category_id}
+                      options={categorys.map((p) => ({
+                        value: p.id,
+                        label: p.name,
+                      }))}
+                      onSelect={handleSelectCategory}
+                      loading={loading}
+                      placeholder="اختر المنتجات"
+                    />
+                  </ConfigProvider>
                 </label>
 
                 {/* PRICE */}

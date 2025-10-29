@@ -18,9 +18,12 @@ const EditOrder = ({
     quantity: "",
   });
 
+  const [availableStokes, setAvailableStokes] = useState(10);
+
   const [itemsDetailes, setItemsDetailes] = useState([]);
 
   useEffect(() => {
+    // console.log("orderDetails", orderDetails.OrderDetails.find((item) => item.id === orderId));
     setItemsDetailes({
       orderSpesificItems: orderDetails.OrderDetails.find(
         (item) => item.id === orderId
@@ -38,6 +41,15 @@ const EditOrder = ({
         .quantity,
     });
   }, []);
+  console.log("itemsDetailes", itemsDetailes);
+
+  useEffect(() => {
+    let quantity = itemsDetailes?.orderSpesificItems?.quantity;
+    let stock = itemsDetailes?.productsDetails?.stock;
+    setAvailableStokes(stock + quantity);
+  }, [itemsDetailes]);
+
+  console.log("availableStokes", availableStokes);
 
   const updateOrderDetails = async () => {
     const DataSend = orderDetails.OrderDetails.filter(
@@ -104,8 +116,14 @@ const EditOrder = ({
                         alignItems: "center",
                       }}
                       min={1}
+                      max={availableStokes}
                       value={selectOrderItems?.quantity} // هنا استبدلنا defaultValue بـ value
                       onChange={(e) => {
+                        if (e > availableStokes) {
+                          alert("the stock is not enough");
+                          return;
+                        }
+
                         setSelectOrderItems({
                           ...selectOrderItems,
                           quantity: e,
