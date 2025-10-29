@@ -112,6 +112,8 @@ const EditOrderPage = () => {
     setOrderData({ OrderDetails: orders?.items, productsDetails: products });
   }, [orders, products]);
 
+
+  console.log("orderData", orderData);
   const ProductPrice = (product) => {
     // if (product?.product_info?.endpricedate <= product?.created_at) {
     //   return product.price;
@@ -369,6 +371,8 @@ const EditOrderPage = () => {
         return "ملغاة";
     }
   };
+
+
   const CustomerInfo = () => (
     <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden h-fit">
       <div className="p-6 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border-b border-gray-700">
@@ -512,7 +516,7 @@ const EditOrderPage = () => {
           />
         )}
         {showEditOrderUserInfo && (
-          <EdtUserOrderInfo refresh={refresh} setRefresh={setRefresh} />
+          <EdtUserOrderInfo refresh={refresh} setRefresh={setRefresh} setShowEditOrderUserInfo={setShowEditOrderUserInfo} />
         )}
         <Container>
           <div className="py-8">

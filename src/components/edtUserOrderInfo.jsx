@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useStatment } from "../context/maping";
+// import { useStatment } from "../context/maping";
 import { ConfigProvider, Select, theme, InputNumber, Input } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 //  refresh={}         ={setRefresh}
-const EdtUserOrderInfo = ({ setRefresh, refresh }) => {
-  const { setShowEditOrderUserInfo } = useStatment();
+const EdtUserOrderInfo = ({ setRefresh, refresh ,setShowEditOrderUserInfo}) => {
+  // const { setShowEditOrderUserInfo } = useStatment();
   //   const [order, setOrder] = useState({});
   const [orderEdit, setOrderEdit] = useState({
     phone: "",
