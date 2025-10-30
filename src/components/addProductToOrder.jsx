@@ -58,6 +58,7 @@ const AddProductToOrder = ({
   const handelAdd = async () => {
     const haveColor = options.color?.length > 0;
     const haveSize = options.size?.length > 0;
+    let sameproduct = false;
 
     if (haveColor && optionSelected.color === null) {
       alert("Please select color");
@@ -87,8 +88,17 @@ const AddProductToOrder = ({
 
       const updatedItems = [...(currentOrder.items || []), newItem];
 
+      currentOrder.items.map((item) => {
+        if (item.id === newItem.id) {
+          item.quantity += newItem.quantity;
+          sameproduct = true;
+        }
+      });
+
+      // console.log("currentOrder", currentOrder.items);
+      // return;
       await axios.put(`http://161.97.169.6:4000/order/${id}`, {
-        items: updatedItems,
+        items: sameproduct ? currentOrder.items : updatedItems,
       });
 
       setShowAddProductToOrder(false);

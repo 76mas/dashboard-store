@@ -30,6 +30,8 @@ import {
 import EdtUserOrderInfo from "../components/edtUserOrderInfo";
 import DeleteItem from "../components/deleteitemfromOrder";
 import AddProductToOrder from "@/components/addProductToOrder";
+import { BiSolidCoupon } from "react-icons/bi";
+import AddVoucherToOrder from "@/components/addVoucherToOrder";
 
 const TotalpriceforOneProduct = (product, quantity) => {
   if (product?.product_info?.endpricedate <= product?.created_at) {
@@ -55,6 +57,7 @@ const EditOrderPage = () => {
   const { id } = useParams();
 
   const [showDeleteItem, setShowDeleteItem] = useState(false);
+  const [showAddVoucherToOrder, setShowAddVoucherToOrder] = useState(false);
   const [showEditOrderUserInfo, setShowEditOrderUserInfo] = useState(false);
   const [orderDetails, setOrderDetails] = useState({});
   const [showAddProductToOrder, setShowAddProductToOrder] = useState(false);
@@ -65,6 +68,7 @@ const EditOrderPage = () => {
   const [orderData, setOrderData] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(true);
+  const [orderDate, setOrderDate] = useState(null);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     GetOrders({ id });
@@ -79,7 +83,9 @@ const EditOrderPage = () => {
     try {
       const res = await axios.get(`http://161.97.169.6:4000/order/${id}`);
       setOrders(res.data);
+      console.log("order", res.data);
 
+      setOrderDate(res.data.created_at);
       try {
         let p = [];
         for (let i = 0; i < res.data.items.length; i++) {
@@ -112,14 +118,15 @@ const EditOrderPage = () => {
     setOrderData({ OrderDetails: orders?.items, productsDetails: products });
   }, [orders, products]);
 
-
-  console.log("orderData", orderData);
   const ProductPrice = (product) => {
     // if (product?.product_info?.endpricedate <= product?.created_at) {
     //   return product.price;
     // }
 
-    if (product?.endpricedate >= product?.created_at) {
+    if (
+      product?.endpricedate >= product?.created_at ||
+      orderDate >= product?.endpricedate
+    ) {
       return product?.endprice;
     } else {
       return product?.price;
@@ -127,21 +134,24 @@ const EditOrderPage = () => {
   };
 
   const calculateTotal = () => {
-    let tolal = 0;
-    // let order= orderData?.OrderDetails || [];
-
-    let TimeOfOrderCreate = orders?.created_at || [];
+    let total = 0;
     let items = orders?.items || [];
 
     items.forEach((p) => {
-      if (TimeOfOrderCreate <= p.product_info?.endpricedate) {
-        tolal += (p.product_info?.endprice || 0) * p.quantity;
+      // const orderDateTime = new Date(orderDate);
+      // const endPriceDateTime = new Date(p.product_info?.endpricedate);
+
+
+      if (orderDate < p.product_info?.endpricedate) {
+        // الطلب صار قبل انتهاء السعر النهائي → نستخدم endprice
+        total += (p.product_info?.endprice || 0) * p.quantity;
       } else {
-        tolal += (p.product_info?.price || 0) * p.quantity;
+        // الطلب صار بعد انتهاء السعر النهائي → نستخدم السعر الجديد
+        total += (p.product_info?.price || 0) * p.quantity;
       }
     });
 
-    return tolal;
+    return total;
   };
 
   const VoucherType = (order) => {
@@ -293,14 +303,28 @@ const EditOrderPage = () => {
             تفاصيل الطلب
           </h2>
 
-          <button
-            onClick={() => {
-              setShowAddProductToOrder(true);
-            }}
-            className="absolute top-6 right-6 bg-gradient-to-r from-green-600/90 active:scale-95 to-cyan-600/80 p-2 rounded-sm text-white hover:bg-gradient-to-r hover:text-white/80  cursor-pointer transition flex items-center gap-2"
-          >
-            اضف منتج <FaPlus />
-          </button>
+
+          <div className="flex absolute top-6  right-5 justify-center gap-4 items-center">
+            
+            <button
+              onClick={() => {
+                setShowAddVoucherToOrder(true);
+              }}
+              className="right-6 bg-gradient-to-r from-purple-600/90 active:scale-95 to-blue-600/80 p-2 rounded-sm text-white hover:bg-gradient-to-r hover:text-white/80  cursor-pointer transition flex items-center gap-2"
+            >
+              اضف خصم <BiSolidCoupon />
+            </button>{" "}
+            <button
+              onClick={() => {
+                setShowAddProductToOrder(true);
+              }}
+              className=" top-6 right-6 bg-gradient-to-r from-green-600/90 active:scale-95 to-cyan-600/80 p-2 rounded-sm text-white hover:bg-gradient-to-r hover:text-white/80  cursor-pointer transition flex items-center gap-2"
+            >
+              اضف منتج <FaPlus />
+            </button>
+
+
+          </div>
         </div>
         <div className="p-6">
           <Table
@@ -315,6 +339,7 @@ const EditOrderPage = () => {
           {/* Order Total */}
           <div className="mt-6 p-4 bg-gradient-to-r from-green-600/20 to-blue-600/20 rounded-xl border border-gray-700">
             <div className="flex justify-between items-center">
+
               <span className="text-xl font-semibold text-white">
                 السعر الإجمالي للطلب:
               </span>
@@ -371,7 +396,6 @@ const EditOrderPage = () => {
         return "ملغاة";
     }
   };
-
 
   const CustomerInfo = () => (
     <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden h-fit">
@@ -498,6 +522,7 @@ const EditOrderPage = () => {
             orderId={orderId}
           />
         )}
+
         {showAddProductToOrder && (
           <AddProductToOrder
             refresh={refresh}
@@ -505,6 +530,9 @@ const EditOrderPage = () => {
             setShowAddProductToOrder={setShowAddProductToOrder}
           />
         )}
+
+
+
         {showDeleteItem && (
           <DeleteItem
             refresh={refresh}
@@ -515,8 +543,21 @@ const EditOrderPage = () => {
             orderId={orderId}
           />
         )}
+
+        {showAddVoucherToOrder && (
+          <AddVoucherToOrder
+            refresh={refresh}
+            setRefresh={setRefresh}
+            totalPrice={calculateTotal()}
+            setShowAddVoucherToOrder={setShowAddVoucherToOrder}
+          />
+        )}
         {showEditOrderUserInfo && (
-          <EdtUserOrderInfo refresh={refresh} setRefresh={setRefresh} setShowEditOrderUserInfo={setShowEditOrderUserInfo} />
+          <EdtUserOrderInfo
+            refresh={refresh}
+            setRefresh={setRefresh}
+            setShowEditOrderUserInfo={setShowEditOrderUserInfo}
+          />
         )}
         <Container>
           <div className="py-8">
