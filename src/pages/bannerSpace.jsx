@@ -233,6 +233,7 @@ const BannerTable = () => {
       {showDelete && (
         <AlertDelete
           id={bannerId}
+          setBannerId={setBannerId}
           setShowDelete={setShowDelete}
           refresh={refresh}
           setRefresh={setRefresh}
@@ -353,7 +354,6 @@ const AddBanner = ({
         type: banner.type,
         priority: banner.priority,
         background: cdnUrl,
-        // map: banner.type === "Category" ? banner.map : selectedProductIds,
         map: banner.type === "Category" ? banner.map : productSelected || [],
       };
 
@@ -369,8 +369,6 @@ const AddBanner = ({
           },
         ];
       }
-      // console.log("data", data);
-      // return;
       if (bannerId) {
         await axios.put(`http://161.97.169.6:4000/banner/${bannerId}`, data);
       } else {
@@ -416,6 +414,10 @@ const AddBanner = ({
 
   const handleDateChange = (date) => {
     setEndDate(date);
+  };
+
+  const handleDeselectProduct = (value) => {
+    setProductSelected(productSelected.filter((p) => p.id !== value));
   };
 
   return (
@@ -531,6 +533,7 @@ const AddBanner = ({
                 label: p.name,
               }))}
               onSelect={handleSelectProduct}
+              onDeselect={handleDeselectProduct}
               onSearch={fetchProducts}
               loading={loading}
               placeholder="اختر المنتجات"
@@ -571,8 +574,6 @@ const AddBanner = ({
                     size="large"
                     className="w-full border border-[#ffffff4e] bg-transparent text-white/50 p-2 rounded-md"
                     // placeholder="اختر تاريخ الانتهاء"
-
-                    
                   />
                 </ConfigProvider>
               </Form.Item>
@@ -626,10 +627,17 @@ const AddBanner = ({
   );
 };
 
-const AlertDelete = ({ id, setShowDelete, refresh, setRefresh }) => {
+const AlertDelete = ({
+  id,
+  setShowDelete,
+  refresh,
+  setRefresh,
+  setBannerId,
+}) => {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://161.97.169.6:4000/banner/${id}`);
+      setBannerId(null);
       setShowDelete(false);
 
       setRefresh(!refresh);
@@ -641,6 +649,7 @@ const AlertDelete = ({ id, setShowDelete, refresh, setRefresh }) => {
   return (
     <div
       onClick={() => {
+        setBannerId(null);
         setShowDelete(false);
       }}
       className="w-full z-40 fixed flex -translate-y-20  items-center justify-center bg-[#000000a8] h-full"
@@ -670,7 +679,10 @@ const AlertDelete = ({ id, setShowDelete, refresh, setRefresh }) => {
             </button>
 
             <button
-              onClick={() => setShowDelete(false)}
+              onClick={() => {
+                setBannerId(null);
+                setShowDelete(false);
+              }}
               className="w-full py-2 cursor-pointer text-sky-800 border-2 border-sky-800 flex items-center justify-center gap-2 px-3 rounded-[8px] hover:bg-[#1e90ff22] transition-all duration-200"
             >
               الغاء <GrRedo />
