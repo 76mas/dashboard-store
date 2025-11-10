@@ -33,6 +33,25 @@ import AddProductToOrder from "@/components/addProductToOrder";
 import { BiSolidCoupon } from "react-icons/bi";
 import AddVoucherToOrder from "@/components/addVoucherToOrder";
 
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+const BackButton = () => {
+  const navigate = useNavigate();
+
+  return (
+    <button
+      onClick={() => navigate(-1)}
+      className="flex items-center gap-2 h-[50px] absolute top-4 left-10 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-md transition"
+    >
+      <FaArrowLeft />
+      رجوع
+    </button>
+  );
+};
+
+
+
 const TotalpriceforOneProduct = (product, quantity) => {
   if (product?.product_info?.endpricedate <= product?.created_at) {
     return (product?.product_info?.price || 0) * quantity;
@@ -509,6 +528,9 @@ const EditOrderPage = () => {
       `}</style>
 
       <div className="min-h-screen w-full flex justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        
+        <BackButton />
+
         {showEditOrder && (
           <EditOrder
             refresh={refresh}
