@@ -31,7 +31,7 @@ function App() {
     <div className="w-full relative h-full flex flex-col items-center min-h-screen bg-[#141414]">
       {!hideHeader && <Header />}
 
-      <Routes>
+      <Routes basename='/dashboard'>
         {/* 👇 هذا السطر يخلي صفحة /login هي الافتراضية */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
