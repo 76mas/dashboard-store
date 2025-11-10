@@ -26,7 +26,7 @@ const Login = () => {
       localStorage.setItem("token_dashboard", response.data.token);
       localStorage.setItem("admin", JSON.stringify(response.data.user));
 
-      window.location.href = "/orders";
+      navigate("/orders");
     } catch (error) {
       console.error(error);
       alert("Login failed");
