@@ -14,7 +14,10 @@ const Header = () => {
     //   Orders: false,
     //   Voucher: false,
     // });
-    if (window.location.pathname === "/") {
+    if (
+      window.location.pathname === "/" ||
+      window.location.pathname === "/dashboard"
+    ) {
       setActive({
         Categorys: false,
         Products: false,
