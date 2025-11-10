@@ -1,5 +1,6 @@
 import axios from "axios";
 import "../App.css";
+import { useNavigate } from "react-router-dom";
 
 import React, { useEffect, useState } from "react";
 
@@ -8,6 +9,7 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handellogin = async () => {
     const postData = {
@@ -33,7 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token_dashboard")) {
-      window.location.href = "/order";
+      navigate("/order");
     }
   }, []);
 
