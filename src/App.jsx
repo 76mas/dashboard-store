@@ -38,14 +38,14 @@ function App() {
       {!hideHeader && <Header />}
 
       <Routes>
-        <Route path="/dashboard" element={<Navigate to="/login" replace />} />
-        <Route path="/dashboard/editOrder/:id" element={<EditOrderPage />} />
-        <Route path="/dashboard/voucher" element={<VoucherSpace />} />
-        <Route path="/dashboard/order" element={<OrderSpace />} />
-        <Route path="/dashboard/banner" element={<BannerTable />} />
-        <Route path="/dashboard/product" element={<ProductsSpace />} />
-        <Route path="/dashboard/category" element={<CategoryTapble />} />
-        <Route path="/dashboard/login" element={<Login />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/editOrder/:id" element={<EditOrderPage />} />
+        <Route path="/voucher" element={<VoucherSpace />} />
+        <Route path="/order" element={<OrderSpace />} />
+        <Route path="/banner" element={<BannerTable />} />
+        <Route path="/product" element={<ProductsSpace />} />
+        <Route path="/category" element={<CategoryTapble />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </div>
   );
