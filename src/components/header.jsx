@@ -21,14 +21,14 @@ const Header = () => {
         Banners: false,
         Orders: true,
       });
-      navigate("/order");
+      navigate("/orders");
     } else if (window.location.pathname === "/category") {
       setActive({ Categorys: true, Products: false, Banners: false });
     } else if (window.location.pathname === "/product") {
       setActive({ Categorys: false, Products: true, Banners: false });
     } else if (window.location.pathname === "/banner") {
       setActive({ Categorys: false, Products: false, Banners: true });
-    } else if (window.location.pathname === "/order") {
+    } else if (window.location.pathname === "/orders") {
       setActive({
         Categorys: false,
         Products: false,
@@ -138,7 +138,7 @@ const Header = () => {
                     Orders: true,
                     Voucher: false,
                   });
-                  navigate("/order");
+                  navigate("/orders");
                 }}
                 className={`  ${
                   active.Orders

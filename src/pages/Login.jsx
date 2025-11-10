@@ -26,7 +26,7 @@ const Login = () => {
       localStorage.setItem("token_dashboard", response.data.token);
       localStorage.setItem("admin", JSON.stringify(response.data.user));
 
-      window.location.href = "/order";
+      window.location.href = "/orders";
     } catch (error) {
       console.error(error);
       alert("Login failed");
@@ -35,7 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token_dashboard")) {
-      navigate("/order");
+      navigate("/orders");
     }
   }, []);
 

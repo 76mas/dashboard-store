@@ -1,11 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
 import AddProduct from "./components/addProduct";
 import AlertDelete from "./components/alertDelete";
 import Header from "./components/header";
@@ -38,10 +32,11 @@ function App() {
       {!hideHeader && <Header />}
 
       <Routes>
+   
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/editOrder/:id" element={<EditOrderPage />} />
         <Route path="/voucher" element={<VoucherSpace />} />
-        <Route path="/order" element={<OrderSpace />} />
+        <Route path="/orders" element={<OrderSpace />} />
         <Route path="/banner" element={<BannerTable />} />
         <Route path="/product" element={<ProductsSpace />} />
         <Route path="/category" element={<CategoryTapble />} />
