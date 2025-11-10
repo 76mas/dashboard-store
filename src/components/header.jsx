@@ -25,20 +25,20 @@ const Header = () => {
         Orders: true,
       });
       navigate("/orders");
-    } else if (window.location.pathname === "/category") {
+    } else if (window.location.pathname === "/dashboard/category") {
       setActive({ Categorys: true, Products: false, Banners: false });
-    } else if (window.location.pathname === "/product") {
+    } else if (window.location.pathname === "/dashboard/product") {
       setActive({ Categorys: false, Products: true, Banners: false });
-    } else if (window.location.pathname === "/banner") {
+    } else if (window.location.pathname === "/dashboard/banner") {
       setActive({ Categorys: false, Products: false, Banners: true });
-    } else if (window.location.pathname === "/orders") {
+    } else if (window.location.pathname === "/dashboard/orders") {
       setActive({
         Categorys: false,
         Products: false,
         Banners: false,
         Orders: true,
       });
-    } else if (window.location.pathname === "/voucher") {
+    } else if (window.location.pathname === "/dashboard/voucher") {
       setActive({
         Categorys: false,
         Products: false,
