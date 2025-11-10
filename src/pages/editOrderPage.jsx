@@ -50,8 +50,6 @@ const BackButton = () => {
   );
 };
 
-
-
 const TotalpriceforOneProduct = (product, quantity) => {
   if (product?.product_info?.endpricedate <= product?.created_at) {
     return (product?.product_info?.price || 0) * quantity;
@@ -528,9 +526,6 @@ const EditOrderPage = () => {
       `}</style>
 
       <div className="min-h-screen w-full flex justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        
-        <BackButton />
-
         {showEditOrder && (
           <EditOrder
             refresh={refresh}
@@ -576,6 +571,7 @@ const EditOrderPage = () => {
           />
         )}
         <Container>
+          <BackButton />
           <div className="py-8">
             {/* Header */}
             <div className="mb-8 text-center">
