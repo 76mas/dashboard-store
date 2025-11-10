@@ -1,5 +1,11 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, useLocation, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import AddProduct from "./components/addProduct";
 import AlertDelete from "./components/alertDelete";
 import Header from "./components/header";
@@ -31,17 +37,15 @@ function App() {
     <div className="w-full relative h-full flex flex-col items-center min-h-screen bg-[#141414]">
       {!hideHeader && <Header />}
 
-      <Routes basename='/dashboard'>
-        {/* 👇 هذا السطر يخلي صفحة /login هي الافتراضية */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
-        <Route path="/editOrder/:id" element={<EditOrderPage />} />
-        <Route path="/voucher" element={<VoucherSpace />} />
-        <Route path="/order" element={<OrderSpace />} />
-        <Route path="/banner" element={<BannerTable />} />
-        <Route path="/product" element={<ProductsSpace />} />
-        <Route path="/category" element={<CategoryTapble />} />
-        <Route path="/login" element={<Login />} />
+      <Routes>
+        <Route path="/dashboard" element={<Navigate to="/login" replace />} />
+        <Route path="/dashboard/editOrder/:id" element={<EditOrderPage />} />
+        <Route path="/dashboard/voucher" element={<VoucherSpace />} />
+        <Route path="/dashboard/order" element={<OrderSpace />} />
+        <Route path="/dashboard/banner" element={<BannerTable />} />
+        <Route path="/dashboard/product" element={<ProductsSpace />} />
+        <Route path="/dashboard/category" element={<CategoryTapble />} />
+        <Route path="/dashboard/login" element={<Login />} />
       </Routes>
     </div>
   );
