@@ -20,17 +20,15 @@ const EditCategory = ({ setShowEditCategory, id, refresh, setRefresh }) => {
 
   const handelAddCategory = async () => {
     const file = image;
-    
-    if(typeof file === "object"){
+
+    if (typeof file === "object") {
       const result = await uploadDirect(file, {
         publicKey: "0561aa737ff71db6dae7",
         store: true,
       });
       const cdnUrl = `https://3km3cceozg.ucarecd.net//${result.uuid}/`;
       setImage(cdnUrl);
-      
     }
-  
 
     let data = {
       name: category.name,
@@ -42,7 +40,7 @@ const EditCategory = ({ setShowEditCategory, id, refresh, setRefresh }) => {
     }
     try {
       const resoponse = await axios.put(
-        `http://161.97.169.6:4000/category/${id}`,
+        `https://mahmod.puretik.info/api/category/${id}`,
         data
       );
       console.log("add category success", resoponse.data);
@@ -55,7 +53,9 @@ const EditCategory = ({ setShowEditCategory, id, refresh, setRefresh }) => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get(`http://161.97.169.6:4000/category/${id}`);
+      const res = await axios.get(
+        `https://mahmod.puretik.info/api/category/${id}`
+      );
       console.log("category", res.data);
       setCategory(res.data);
       setImage(res.data.image);

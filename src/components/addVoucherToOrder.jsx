@@ -30,7 +30,9 @@ const AddVoucherToOrder = ({
 
   const GetOrder = async () => {
     try {
-      const response = await axios.get(`http://161.97.169.6:4000/order/${id}`);
+      const response = await axios.get(
+        `https://mahmod.puretik.info/api/order/${id}`
+      );
       setOrder(response.data);
       console.log("orderdddddd", response.data);
       setUser_id(response.data.user_id);
@@ -41,7 +43,9 @@ const AddVoucherToOrder = ({
 
   const GetVouchers = async () => {
     try {
-      const response = await axios.get("http://161.97.169.6:4000/voucher");
+      const response = await axios.get(
+        "https://mahmod.puretik.info/api/voucher"
+      );
       setVouchers(response.data);
       console.log("vouchers", response.data);
     } catch (e) {
@@ -56,15 +60,18 @@ const AddVoucherToOrder = ({
       return;
     }
     try {
-      const res = await axios.put(`http://161.97.169.6:4000/order/${id}`, {
-        ...order,
-        voucher_info: voucher,
-        voucher_id: voucher_id,
-      });
+      const res = await axios.put(
+        `https://mahmod.puretik.info/api/order/${id}`,
+        {
+          ...order,
+          voucher_info: voucher,
+          voucher_id: voucher_id,
+        }
+      );
 
-        setLoading(false);
-        setRefresh(!refresh);
-        setShowAddVoucherToOrder(false);
+      setLoading(false);
+      setRefresh(!refresh);
+      setShowAddVoucherToOrder(false);
       console.log("res affter apply voucher", res.data);
     } catch (err) {
       console.log(err);
@@ -90,10 +97,13 @@ const AddVoucherToOrder = ({
     }
     setLoading(true);
     try {
-      const res = await axios.post(`http://161.97.169.6:4000/voucher/check`, {
-        code: coupon,
-        user: user_id,
-      });
+      const res = await axios.post(
+        `https://mahmod.puretik.info/api/voucher/check`,
+        {
+          code: coupon,
+          user: user_id,
+        }
+      );
 
       console.log("res voucher", res.data);
       console.log("totalPrice", totalPrice);

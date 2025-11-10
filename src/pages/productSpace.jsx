@@ -41,7 +41,7 @@ const ProductsSpace = () => {
 
   const getProducts = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/product", {
+      const res = await axios.get("https://mahmod.puretik.info/api/product", {
         params: { page, limit, search },
       });
 

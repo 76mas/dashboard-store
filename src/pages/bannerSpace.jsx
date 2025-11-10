@@ -50,7 +50,7 @@ const BannerTable = () => {
 
   const GetBanners = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/banner");
+      const res = await axios.get("https://mahmod.puretik.info/api/banner");
       setBanners(res.data);
     } catch (err) {
       console.log(err);
@@ -145,7 +145,7 @@ const BannerTable = () => {
 
   const handelChangeActive = async (id, newActive) => {
     try {
-      await axios.put(`http://161.97.169.6:4000/banner/${id}`, {
+      await axios.put(`https://mahmod.puretik.info/api/banner/${id}`, {
         active: newActive,
       });
       // getAllProducts();
@@ -277,7 +277,7 @@ const AddBanner = ({
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/category");
+      const res = await axios.get("https://mahmod.puretik.info/api/category");
       setCategorys(res.data);
     } catch (err) {
       console.log(err);
@@ -287,9 +287,12 @@ const AddBanner = ({
   const fetchProducts = async (term = "") => {
     try {
       setLoading(true);
-      const response = await axios.get("http://161.97.169.6:4000/product", {
-        params: { limit: 10, search: term },
-      });
+      const response = await axios.get(
+        "https://mahmod.puretik.info/api/product",
+        {
+          params: { limit: 10, search: term },
+        }
+      );
       if (response.data?.success) {
         setProducts(response.data.products || []);
       }
@@ -303,7 +306,7 @@ const AddBanner = ({
   const getBanner = async () => {
     try {
       const res = await axios.get(
-        `http://161.97.169.6:4000/banner/${bannerId}`
+        `https://mahmod.puretik.info/api/banner/${bannerId}`
       );
       const data = res.data;
       setBanner(data);
@@ -370,9 +373,12 @@ const AddBanner = ({
         ];
       }
       if (bannerId) {
-        await axios.put(`http://161.97.169.6:4000/banner/${bannerId}`, data);
+        await axios.put(
+          `https://mahmod.puretik.info/api/banner/${bannerId}`,
+          data
+        );
       } else {
-        await axios.post("http://161.97.169.6:4000/banner", data);
+        await axios.post("https://mahmod.puretik.info/api/banner", data);
       }
 
       setShowAddBanner(false);
@@ -399,8 +405,6 @@ const AddBanner = ({
 
     console.log("Selected product:", selected);
   };
-
-  console.log("productSelected", productSelected);
 
   const handleSelectBanner = (value) => {
     const selected = banners.find((p) => p.id === value);
@@ -636,7 +640,7 @@ const AlertDelete = ({
 }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://161.97.169.6:4000/banner/${id}`);
+      await axios.delete(`https://mahmod.puretik.info/api/banner/${id}`);
       setBannerId(null);
       setShowDelete(false);
 

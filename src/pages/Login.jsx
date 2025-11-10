@@ -16,7 +16,7 @@ const Login = () => {
     };
     try {
       const response = await axios.post(
-        "http://161.97.169.6:4000/user/login",
+        "https://mahmod.puretik.info/api/user/login",
         postData
       );
       console.log(response.data);

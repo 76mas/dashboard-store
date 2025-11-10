@@ -61,7 +61,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
     try {
       // 1️⃣ إضافة المنتج أولاً
       const response = await axios.post(
-        "http://161.97.169.6:4000/product",
+        "https://mahmod.puretik.info/api/product",
         data
       );
 
@@ -79,7 +79,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
         console.log("Uploaded:", cdnUrl);
 
         // 3️⃣ حفظ الصورة بقاعدة البيانات
-        await axios.post("http://161.97.169.6:4000/images", {
+        await axios.post("https://mahmod.puretik.info/api/images", {
           link: cdnUrl,
           product_id: response.data.id,
           priority: i + 1,
@@ -95,7 +95,7 @@ const AddProduct = ({ setRefresh, refresh, setShowAddProduct }) => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/category");
+      const res = await axios.get("https://mahmod.puretik.info/api/category");
       setCategorys(res.data);
       console.log("category", res.data);
       setProduct((prev) => ({ ...prev, category_id: res.data[0]?.id }));

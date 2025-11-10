@@ -81,7 +81,9 @@ const EditOrderPage = () => {
   const GetOrders = async ({ id }) => {
     setLoading(true);
     try {
-      const res = await axios.get(`http://161.97.169.6:4000/order/${id}`);
+      const res = await axios.get(
+        `https://mahmod.puretik.info/api/order/${id}`
+      );
       setOrders(res.data);
       console.log("order", res.data);
 
@@ -90,7 +92,7 @@ const EditOrderPage = () => {
         let p = [];
         for (let i = 0; i < res.data.items.length; i++) {
           const product = await axios.get(
-            `http://161.97.169.6:4000/product/${res.data.items[i].id}`
+            `https://mahmod.puretik.info/api/product/${res.data.items[i].id}`
           );
           p.push(product.data);
         }
@@ -101,7 +103,7 @@ const EditOrderPage = () => {
 
       try {
         const userRes = await axios.get(
-          `http://161.97.169.6:4000/user/${res.data.user_id}`
+          `https://mahmod.puretik.info/api/user/${res.data.user_id}`
         );
         setUserInfo(userRes.data);
       } catch (err) {
@@ -140,7 +142,6 @@ const EditOrderPage = () => {
     items.forEach((p) => {
       // const orderDateTime = new Date(orderDate);
       // const endPriceDateTime = new Date(p.product_info?.endpricedate);
-
 
       if (orderDate < p.product_info?.endpricedate) {
         // الطلب صار قبل انتهاء السعر النهائي → نستخدم endprice
@@ -303,9 +304,7 @@ const EditOrderPage = () => {
             تفاصيل الطلب
           </h2>
 
-
           <div className="flex absolute top-6  right-5 justify-center gap-4 items-center">
-            
             <button
               onClick={() => {
                 setShowAddVoucherToOrder(true);
@@ -322,8 +321,6 @@ const EditOrderPage = () => {
             >
               اضف منتج <FaPlus />
             </button>
-
-
           </div>
         </div>
         <div className="p-6">
@@ -339,7 +336,6 @@ const EditOrderPage = () => {
           {/* Order Total */}
           <div className="mt-6 p-4 bg-gradient-to-r from-green-600/20 to-blue-600/20 rounded-xl border border-gray-700">
             <div className="flex justify-between items-center">
-
               <span className="text-xl font-semibold text-white">
                 السعر الإجمالي للطلب:
               </span>
@@ -530,8 +526,6 @@ const EditOrderPage = () => {
             setShowAddProductToOrder={setShowAddProductToOrder}
           />
         )}
-
-
 
         {showDeleteItem && (
           <DeleteItem

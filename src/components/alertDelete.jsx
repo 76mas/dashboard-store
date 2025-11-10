@@ -15,7 +15,7 @@ const AlertDelete = ({
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://161.97.169.6:4000/${deleteitems.name}/${deleteitems.id}`
+        `https://mahmod.puretik.info/api/${deleteitems.name}/${deleteitems.id}`
       );
       setShowAlert(false);
       setDeleteitems({ id: null, name: null });
@@ -45,7 +45,7 @@ const AlertDelete = ({
           <IoAlertCircleOutline className="text-[30px] text-[#ff0073cc]" />
 
           <h1 className="text-[#ddd] text-center">
-هل أنت متأكد من حذف هذا العنصر؟
+            هل أنت متأكد من حذف هذا العنصر؟
           </h1>
 
           <div className="flex items-center gap-3 w-[85%]">

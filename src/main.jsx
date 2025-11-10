@@ -9,7 +9,7 @@ import ProductsTable from "./components/ProductsTable.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <EventProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/dashboard">
         <App />
       </BrowserRouter>
     </EventProvider>

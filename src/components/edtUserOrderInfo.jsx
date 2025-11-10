@@ -4,7 +4,11 @@ import { ConfigProvider, Select, theme, InputNumber, Input } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 //  refresh={}         ={setRefresh}
-const EdtUserOrderInfo = ({ setRefresh, refresh ,setShowEditOrderUserInfo}) => {
+const EdtUserOrderInfo = ({
+  setRefresh,
+  refresh,
+  setShowEditOrderUserInfo,
+}) => {
   // const { setShowEditOrderUserInfo } = useStatment();
   //   const [order, setOrder] = useState({});
   const [orderEdit, setOrderEdit] = useState({
@@ -20,7 +24,9 @@ const EdtUserOrderInfo = ({ setRefresh, refresh ,setShowEditOrderUserInfo}) => {
 
   const getOrderbyId = async () => {
     try {
-      const order = await axios.get(`http://161.97.169.6:4000/order/${id}`);
+      const order = await axios.get(
+        `https://mahmod.puretik.info/api/order/${id}`
+      );
 
       //   setOrder(order.data);
       setOrderEdit({
@@ -37,7 +43,7 @@ const EdtUserOrderInfo = ({ setRefresh, refresh ,setShowEditOrderUserInfo}) => {
 
   const handleEditOrder = async () => {
     try {
-      await axios.put(`http://161.97.169.6:4000/order/${id}`, orderEdit);
+      await axios.put(`https://mahmod.puretik.info/api/order/${id}`, orderEdit);
 
       setShowEditOrderUserInfo(false);
       setRefresh(!refresh);

@@ -33,7 +33,7 @@ const CategoryTable = () => {
 
   const GetCategories = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/category");
+      const res = await axios.get("https://mahmod.puretik.info/api/category");
       setCategories(res.data);
     } catch (err) {
       console.log(err);
@@ -42,7 +42,7 @@ const CategoryTable = () => {
 
   const GetProducts = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/product", {
+      const res = await axios.get("https://mahmod.puretik.info/api/product", {
         params: { page: 1, limit: 1000 }, // أو بدون pagination إذا تحتاج كل المنتجات
       });
       // ✅ إذا الباك إند يرجّع { products, total }
@@ -148,7 +148,7 @@ const CategoryTable = () => {
   const handelChangeActive = async (id, newActive) => {
     console.log("click", id, newActive);
     try {
-      await axios.put(`http://161.97.169.6:4000/category/${id}`, {
+      await axios.put(`https://mahmod.puretik.info/api/category/${id}`, {
         active: newActive,
       });
       // getAllProducts();

@@ -43,7 +43,7 @@ const AddCategory = ({ setShowAddCategory, refresh, setRefresh }) => {
     }
     try {
       const resoponse = await axios.post(
-        "http://161.97.169.6:4000/category",
+        "https://mahmod.puretik.info/api/category",
         DataSend
       );
       console.log("add category success", resoponse.data);
@@ -166,7 +166,7 @@ const AddCategory = ({ setShowAddCategory, refresh, setRefresh }) => {
                   htmlFor="price"
                   className=" flex text-[#a4a4a4] flex-col h-[80px]  w-full px-2 gap-2"
                 >
-                   : أولوية الفئة 
+                  : أولوية الفئة
                   <input
                     type="number"
                     id="priority"

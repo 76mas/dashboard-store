@@ -28,9 +28,12 @@ const DeleteItem = ({
     console.log("data send", DataSend);
 
     try {
-      const response = await axios.put(`http://161.97.169.6:4000/order/${id}`, {
-        items: DataSend,
-      });
+      const response = await axios.put(
+        `https://mahmod.puretik.info/api/order/${id}`,
+        {
+          items: DataSend,
+        }
+      );
 
       console.log("response", response);
       setShowDeleteItem(false);

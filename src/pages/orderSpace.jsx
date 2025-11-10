@@ -36,7 +36,7 @@ const OrdersTable = () => {
   const getOrders = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://161.97.169.6:4000/order");
+      const res = await axios.get("https://mahmod.puretik.info/api/order");
       const data = res.data;
 
       setOrders(data);
@@ -45,7 +45,7 @@ const OrdersTable = () => {
         if (!users[order.user_id]) {
           try {
             const userRes = await axios.get(
-              `http://161.97.169.6:4000/user/${order.user_id}`
+              `https://mahmod.puretik.info/api/user/${order.user_id}`
             );
             setUsers((prev) => ({
               ...prev,
@@ -65,7 +65,9 @@ const OrdersTable = () => {
   // تحديث حالة الطلب
   const updateOrderStatus = async (status, id) => {
     try {
-      await axios.put(`http://161.97.169.6:4000/order/${id}`, { status });
+      await axios.put(`https://mahmod.puretik.info/api/order/${id}`, {
+        status,
+      });
       setRefresh((prev) => !prev);
     } catch (err) {
       console.log(err);
@@ -303,7 +305,7 @@ const AlertDelete = ({
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://161.97.169.6:4000/${deleteitems.name}/${deleteitems.id}`
+        `https://mahmod.puretik.info/api/${deleteitems.name}/${deleteitems.id}`
       );
       setShowDeleteItem(false);
       setDeleteitems({ id: null, name: null });

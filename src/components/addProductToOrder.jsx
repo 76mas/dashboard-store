@@ -26,9 +26,12 @@ const AddProductToOrder = ({
   const fetchProducts = async (term = "") => {
     try {
       setLoading(true);
-      const response = await axios.get("http://161.97.169.6:4000/product", {
-        params: { limit: 10, search: term },
-      });
+      const response = await axios.get(
+        "https://mahmod.puretik.info/api/product",
+        {
+          params: { limit: 10, search: term },
+        }
+      );
       if (response.data?.success) {
         setProducts(response.data.products || []);
       }
@@ -71,7 +74,9 @@ const AddProductToOrder = ({
     }
 
     try {
-      const response = await axios.get(`http://161.97.169.6:4000/order/${id}`);
+      const response = await axios.get(
+        `https://mahmod.puretik.info/api/order/${id}`
+      );
       const currentOrder = response.data;
 
       if (!currentOrder) {
@@ -97,7 +102,7 @@ const AddProductToOrder = ({
 
       // console.log("currentOrder", currentOrder.items);
       // return;
-      await axios.put(`http://161.97.169.6:4000/order/${id}`, {
+      await axios.put(`https://mahmod.puretik.info/api/order/${id}`, {
         items: sameproduct ? currentOrder.items : updatedItems,
       });
 

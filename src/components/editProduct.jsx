@@ -69,7 +69,7 @@ const EditProduct = ({
     setLoading(true);
     try {
       const resoponse = await axios.put(
-        `http://161.97.169.6:4000/product/${productDetails.id}`,
+        `https://mahmod.puretik.info/api/product/${productDetails.id}`,
         data
       );
 
@@ -89,7 +89,7 @@ const EditProduct = ({
           console.log("Uploaded:", cdnUrl);
 
           // 3️⃣ حفظ الصورة بقاعدة البيانات
-          await axios.post("http://161.97.169.6:4000/images", {
+          await axios.post("https://mahmod.puretik.info/api/images", {
             link: cdnUrl,
             product_id: resoponse.data.id,
             priority: i + 1,
@@ -101,7 +101,7 @@ const EditProduct = ({
         try {
           for (let i = 0; i < ImageRemoved.length; i++) {
             await axios.delete(
-              `http://161.97.169.6:4000/images/${ImageRemoved}`
+              `https://mahmod.puretik.info/api/images/${ImageRemoved}`
             );
           }
         } catch (err) {
@@ -119,7 +119,7 @@ const EditProduct = ({
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://161.97.169.6:4000/category");
+      const res = await axios.get("https://mahmod.puretik.info/api/category");
 
       setCategorys(res.data);
     } catch (err) {
@@ -136,7 +136,7 @@ const EditProduct = ({
 
   console.log("images", images);
 
-   const handleSelectCategory = (id) => {
+  const handleSelectCategory = (id) => {
     setProduct((prev) => ({ ...prev, category_id: id }));
   };
   return (
@@ -368,14 +368,13 @@ const EditProduct = ({
                       </option>
                     ))}
                   </select> */}
-
-                    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
+                  <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
                     <Select
                       key="select-product"
                       showSearch
                       filterOption={false}
                       value={product.category_id}
-                      options={categorys.map((p) => ({                                   
+                      options={categorys.map((p) => ({
                         value: p.id,
                         label: p.name,
                       }))}

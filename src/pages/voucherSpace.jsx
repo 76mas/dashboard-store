@@ -41,7 +41,7 @@ const VoucherSpace = () => {
 
   const getAllVoucher = async () => {
     try {
-      let res = await axios.get("http://161.97.169.6:4000/voucher");
+      let res = await axios.get("https://mahmod.puretik.info/api/voucher");
       res = res.data.map((item) => ({
         ...item,
         create_at: item.create_at.split("T")[0],
@@ -57,7 +57,7 @@ const VoucherSpace = () => {
   const handelChangeActive = async (id, newActive) => {
     setLoadingRows((prev) => ({ ...prev, [id]: true }));
     try {
-      await axios.put(`http://161.97.169.6:4000/voucher/${id}`, {
+      await axios.put(`https://mahmod.puretik.info/api/voucher/${id}`, {
         active: newActive,
       });
       getAllVoucher();
@@ -299,7 +299,9 @@ const AddVoucher = ({
 
   const fetchVoucherById = async () => {
     try {
-      const response = await axios.get(`http://161.97.169.6:4000/voucher/${id}`);
+      const response = await axios.get(
+        `https://mahmod.puretik.info/api/voucher/${id}`
+      );
       const voucherData = response.data;
 
       setVoucherInfo({
@@ -333,7 +335,7 @@ const AddVoucher = ({
     }
 
     try {
-      await axios.post("http://161.97.169.6:4000/voucher", voucherInfo);
+      await axios.post("https://mahmod.puretik.info/api/voucher", voucherInfo);
       setShowAddVoucher(false);
       setRefresh(!refresh);
       setVoucherId(null);
@@ -344,7 +346,10 @@ const AddVoucher = ({
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`hhttp://161.97.169.6:4000/voucher/${id}`, voucherInfo);
+      await axios.put(
+        `hhttps://mahmod.puretik.info/api/voucher/${id}`,
+        voucherInfo
+      );
       setShowAddVoucher(false);
     } catch (err) {
       console.error("Error updating voucher", err);
@@ -511,7 +516,7 @@ const AddVoucher = ({
 const AlertDelete = ({ id, setShowAlert, refresh, setRefresh }) => {
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://161.97.169.6:4000/voucher/${id}`);
+      await axios.delete(`https://mahmod.puretik.info/api/voucher/${id}`);
       setShowAlert(false);
 
       setRefresh(!refresh);
